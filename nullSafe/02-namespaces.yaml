@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+  namespace: app
+  labels:
+    app: web
+spec:
+  containers:
+  - name: fronted
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: db
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db
+  namespace: db
+  labels:
+    app: db
+spec:
+  containers:
+  - name: db
+    image: mysql:latest
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: password
+    ports:
+    - containerPort: 3306
